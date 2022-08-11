@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=GE-Proton
+Comment=Compatibility tool based on Wine and additional components
+Exec=wine %U
+MimeType=application/x-ms-dos-executable;application/x-msi;application/x-ms-shortcut;
+Icon=proton
+Categories=Game;
+StartupNotify=true
+Terminal=true
