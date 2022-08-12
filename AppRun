@@ -1,19 +1,16 @@
 #!/bin/bash
+
+wine_run() {
+    export WINE="$WINEDIR/bin/wine"
+    if ! "$WINE" "$@"
+        then
+            export WINE="$WINEDIR/bin/wine64"
+            "$WINE" "$@"
+    fi
+}
+
 export WINEDIR="$(dirname "$0")/usr"
-export WINE="$WINEDIR/bin/wine"
 export PATH="$WINEDIR/bin:$PATH"
 export LD_LIBRARY_PATH="$WINEDIR/lib64:$WINEDIR/lib:$LD_LIBRARY_PATH"
-if [ ! -n "$1" ]
-    then
-        if ! "$WINE" explorer
-            then
-                export WINE="$WINEDIR/bin/wine64"
-                "$WINE" explorer
-        fi
-    else
-        if ! "$WINE" "$@"
-            then
-                export WINE="$WINEDIR/bin/wine64"
-                "$WINE" $@
-        fi
-fi
+
+[ ! -n "$1" ] && wine_run explorer||wine_run "$@"
