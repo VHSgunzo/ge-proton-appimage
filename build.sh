@@ -22,7 +22,7 @@ if [ ! -f "appimagetool-$ARCH.AppImage" ]
       echo "Get the missing tools..."
       try_dl "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-$ARCH.AppImage"
       chmod a+x "appimagetool-$ARCH.AppImage"
-      rm_ai_flag "appimagetool-$ARCH.AppImage"
+      #rm_ai_flag "appimagetool-$ARCH.AppImage"
 fi
 
 # get binary sources if necessary
@@ -69,7 +69,8 @@ if [[ -f "appimagetool-$ARCH.AppImage" && -d src ]]
         (cd build && ../appimagetool-$ARCH.AppImage ../src
         GE_VERSION="$(echo "$GE_RELEASE"|sed 's/GE-Proton//')"
         GE_APPIMAGE="$(ls -1t "GE-Proton-${ARCH}.AppImage" 2>/dev/null|head -1)"
-        [ -f "$GE_APPIMAGE" ] && rm_ai_flag "$GE_APPIMAGE" && \
+        #[ -f "$GE_APPIMAGE" ] && rm_ai_flag "$GE_APPIMAGE" && \
+        [ -f "$GE_APPIMAGE" ] && \
         mv "$GE_APPIMAGE" "GE-Proton-v${GE_VERSION}-${ARCH}.AppImage")
         rm -rvf src
 fi
