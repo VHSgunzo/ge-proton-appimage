@@ -3,4 +3,17 @@ export WINEDIR="$(dirname "$0")/usr"
 export WINE="$WINEDIR/bin/wine"
 export PATH="$WINEDIR/bin:$PATH"
 export LD_LIBRARY_PATH="$WINEDIR/lib64:$WINEDIR/lib:$LD_LIBRARY_PATH"
-[ ! -n "$1" ] && "$WINE" explorer||"$WINE" "$@"
+if [ ! -n "$1" ]
+    then
+        if ! "$WINE" explorer
+            then
+                export WINE="$WINEDIR/bin/wine64"
+                "$WINE" explorer
+        fi
+    else
+        if ! "$WINE" "$@"
+            then
+                export WINE="$WINEDIR/bin/wine64"
+                "$WINE" $@
+        fi
+fi
