@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 export WINEDIR="$(dirname "$0")/usr"
 export WINE="$WINEDIR/bin/wine"
 export PATH="$WINEDIR/bin:$PATH"
