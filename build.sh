@@ -1,7 +1,7 @@
 #!/bin/bash
 
-GIT='https://github.com/GloriousEggroll/proton-ge-custom/releases'
-#GE_RELEASE='GE-Proton7-29'
+GIT='https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases'
+#GE_RELEASE='GE-Proton7-35'
 
 rm_ai_flag() {
     dd if=/dev/zero bs=1 count=3 seek=8 conv=notrunc of="$1" &>/dev/null
@@ -28,13 +28,13 @@ fi
 # get binary sources if necessary
 if [[ "$GE_RELEASE" == 'latest' || ! -n "$GE_RELEASE" ]]
     then
-        GE_DL_URL="${GIT}$(curl -L -s "${GIT}"|grep -o '\/download.*tar.gz'|head -1)"
+        GE_DL_URL="$(curl -L -s "${GIT}"|grep -o 'https:.*/download.*tar.gz'|head -1)"
         GE_RELEASE="$(basename "$GE_DL_URL"|sed 's/.tar.gz//')"
         GE_TAR="$(basename "$GE_DL_URL")"
     else
         GE_TAR="$GE_RELEASE.tar.gz"
         [ ! -f "$GE_TAR" ] && \
-        GE_DL_URL="${GIT}$(curl -L -s "${GIT}/tag/${GE_RELEASE}"|grep -o '\/download.*tar.gz')"
+        GE_DL_URL="$(curl -L -s "${GIT}"|grep -o "https:.*/download/$GE_RELEASE/.*tar.gz")"
 fi
 if [ ! -f "$GE_TAR" ]
     then
@@ -49,6 +49,9 @@ if [ -f "$GE_TAR" ]
         echo "Prepare source AppDir..."
         tar -xvf "$GE_TAR" && mkdir src
         mv "${GE_RELEASE}/files" src/usr
+        mv -f "${GE_RELEASE}/protonfixes/cabextract" src/usr/bin/
+        mv -f "${GE_RELEASE}/protonfixes/winetricks" src/usr/bin/
+        mv -f "${GE_RELEASE}/protonfixes/libmspack.so"* src/usr/lib64/
         rm -rvf ${GE_RELEASE}
         cp -vf proton.png src/
         cp -vf proton.desktop src/

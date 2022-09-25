@@ -2,8 +2,25 @@
 
 export WINEDIR="$(dirname "$0")/usr"
 export WINE="$WINEDIR/bin/wine"
+export CABEXTRACT="$WINEDIR/bin/cabextract"
+export WINETRICKS="$WINEDIR/bin/winetricks"
 export PATH="$WINEDIR/bin:$PATH"
+export WINEDLLPATH="$WINEDIR/lib64/wine:$WINEDIR/lib/wine"
 export LD_LIBRARY_PATH="$WINEDIR/lib64:$WINEDIR/lib:$LD_LIBRARY_PATH"
+export GST_PLUGIN_SYSTEM_PATH_1_0="$WINEDIR/lib64/gstreamer-1.0:$WINEDIR/lib/gstreamer-1.0"
+
+[ ! -n "$WINEARCH" ] && export WINEARCH="win64"
+[ ! -n "$WINEPREFIX" ] && export WINEPREFIX="$HOME/.wine"
+[ ! -n "$WINEESYNC" ] && export WINEESYNC=1
+[ ! -n "$WINEFSYNC" ] && export WINEFSYNC=1 WINEFSYNC_FUTEX2=1
+[ ! -n "$WINE_FULLSCREEN_FSR" ] && export WINE_FULLSCREEN_FSR=1
+[ ! -n "$WINEDEBUG" ] && export WINEDEBUG="-all"
+[ ! -n "$VKD3D_DEBUG" ] && export VKD3D_DEBUG="none"
+[ ! -n "$DXVK_LOG_LEVEL" ] && export DXVK_LOG_LEVEL="none"
+[ ! -n "$VKD3D_SHADER_DEBUG" ] && export VKD3D_SHADER_DEBUG="none"
+[ ! -n "$VKD3D_FEATURE_LEVEL" ] && export VKD3D_FEATURE_LEVEL="12_0"
+[ ! -n "$WINE_ALLOW_XIM" ] && export WINE_ALLOW_XIM=0
+[ ! -n "$DXVK_ASYNC" ] && export DXVK_ASYNC=1
 
 if [ ! -n "$1" ]
     then
